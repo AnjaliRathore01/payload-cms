@@ -72,6 +72,7 @@ export interface Config {
     products: Product;
     categories: Category;
     orders: Order;
+    notifications: Notification;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
+    notifications: NotificationsSelect<false> | NotificationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -231,6 +233,38 @@ export interface Order {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  type: 'info' | 'success' | 'warning' | 'error' | 'promotion' | 'news';
+  /**
+   * Check to display this notification on the website home page
+   */
+  active?: boolean | null;
+  /**
+   * Higher priority notifications appear first
+   */
+  priority?: ('low' | 'normal' | 'high' | 'urgent') | null;
+  /**
+   * CSS class for icon (e.g., "bell", "info", "star")
+   */
+  icon?: string | null;
+  /**
+   * Optional link URL for the notification
+   */
+  link?: string | null;
+  /**
+   * Optional expiration date for time-sensitive notifications
+   */
+  expiresAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -272,6 +306,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'orders';
         value: string | Order;
+      } | null)
+    | ({
+        relationTo: 'notifications';
+        value: string | Notification;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -399,6 +437,22 @@ export interface OrdersSelect<T extends boolean = true> {
       };
   total?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications_select".
+ */
+export interface NotificationsSelect<T extends boolean = true> {
+  title?: T;
+  message?: T;
+  type?: T;
+  active?: T;
+  priority?: T;
+  icon?: T;
+  link?: T;
+  expiresAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
