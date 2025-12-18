@@ -62,6 +62,27 @@ Alternatively, you can use [Docker](https://www.docker.com) to spin up this temp
 
 That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
 
+## Utility Scripts
+
+This project includes utility scripts to help populate your database with sample data:
+
+### Add Categories
+
+```bash
+# Add categories with sample data (no images)
+pnpm run add-categories-simple
+
+# Add categories with images (requires image files)
+pnpm run add-categories
+```
+
+These scripts will create sample categories like Electronics, Clothing, Home & Garden, etc. See `scripts/README.md` for more details.
+
+**Prerequisites:**
+- Ensure your `.env` file has `PAYLOAD_SECRET` and `DATABASE_URI` configured
+- Database must be accessible
+- For the full script, image files should exist in the `media/` directory
+
 ## Questions
 
 If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).

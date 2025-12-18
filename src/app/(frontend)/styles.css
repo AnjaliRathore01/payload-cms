@@ -128,6 +128,12 @@ svg {
       border-radius: 4px;
     }
 
+    .products {
+      color: rgb(0, 0, 0);
+      background: rgb(34, 197, 94);
+      border: 1px solid rgb(34, 197, 94);
+    }
+
     .admin {
       color: rgb(0, 0, 0);
       background: rgb(1000, 1000, 1000);
