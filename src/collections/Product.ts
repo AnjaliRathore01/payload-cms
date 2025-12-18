@@ -12,6 +12,15 @@ export const Products: CollectionConfig = {
     { name: 'price', type: 'number', required: true },
     { name: 'salePrice', type: 'number' },
     {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+      required: true,
+      admin: {
+        description: 'Select the category this product belongs to',
+      },
+    },
+    {
       name: 'images',
       type: 'upload',
       relationTo: 'media',

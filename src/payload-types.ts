@@ -177,6 +177,10 @@ export interface Product {
   slug?: string | null;
   price: number;
   salePrice?: number | null;
+  /**
+   * Select the category this product belongs to
+   */
+  category: string | Category;
   images?: (string | Media)[] | null;
   description?: {
     root: {
@@ -402,6 +406,7 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   price?: T;
   salePrice?: T;
+  category?: T;
   images?: T;
   description?: T;
   stock?: T;

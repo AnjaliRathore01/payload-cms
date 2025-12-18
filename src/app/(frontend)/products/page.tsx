@@ -4,22 +4,49 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import config from '@/payload.config'
-import type { Product, Media } from '@/payload-types'
+import type { Product, Media, Category } from '@/payload-types'
+import { CategoryFilter } from '@/components/CategoryFilter'
 
-export default async function ProductsPage() {
+interface ProductsPageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+  const params = await searchParams
+  const selectedCategory = typeof params.category === 'string' ? params.category : null
+
   let products: Product[] = []
+  let categories: Category[] = []
   let payloadConfig: any = null
 
   try {
     payloadConfig = await config
     const payload = await getPayload({ config: payloadConfig })
 
+    // Fetch all categories for the filter dropdown
+    const categoriesResult = await payload.find({
+      collection: 'categories',
+      limit: 100,
+      sort: 'title',
+    })
+    categories = categoriesResult.docs
+
+    // Build where clause for products based on category filter
+    const whereClause: any = {
+      status: { equals: 'active' },
+    }
+
+    // Add category filter if specified
+    if (selectedCategory) {
+      whereClause.category = {
+        equals: selectedCategory,
+      }
+    }
+
     // Fetch active products with images and populate relationships
     const productsResult = await payload.find({
       collection: 'products',
-      where: {
-        status: { equals: 'active' },
-      },
+      where: whereClause,
       depth: 2, // Include related media and other relationships
       limit: 100,
       sort: '-createdAt',
@@ -27,8 +54,8 @@ export default async function ProductsPage() {
 
     products = productsResult.docs as Product[]
   } catch (error) {
-    console.error('Error fetching products:', error)
-    // Return empty products array - error will be handled in UI
+    console.error('Error fetching data:', error)
+    // Return empty arrays - error will be handled in UI
   }
 
   return (
@@ -73,8 +100,16 @@ export default async function ProductsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Our Products</h1>
-              <p className="text-gray-600 mt-2">Discover our amazing collection</p>
+              <h1 className="text-3xl font-bold text-gray-900">
+                {selectedCategory
+                  ? `Products - ${categories.find((c) => c.id === selectedCategory)?.title || 'Category'}`
+                  : 'Our Products'}
+              </h1>
+              <p className="text-gray-600 mt-2">
+                {selectedCategory
+                  ? `Browse our ${categories.find((c) => c.id === selectedCategory)?.title?.toLowerCase()} collection`
+                  : 'Discover our amazing collection'}
+              </p>
             </div>
             <Link
               href="/"
@@ -85,6 +120,9 @@ export default async function ProductsPage() {
           </div>
         </div>
       </header>
+
+      {/* Category Filter */}
+      <CategoryFilter categories={categories} selectedCategory={selectedCategory} />
 
       {/* Products Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -123,6 +161,7 @@ export default async function ProductsPage() {
     </div>
   )
 }
+
 
 function ProductCard({ product }: { product: Product }) {
   // Get the first image - it could be a string ID or a Media object
