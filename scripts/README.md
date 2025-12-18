@@ -36,6 +36,40 @@ npm run add-categories-simple
 - Skips categories that already exist
 - Safe to run multiple times
 
+### `add-products.ts`
+Adds sample products to your database with images.
+
+**Usage:**
+```bash
+pnpm run add-products
+# or
+npm run add-products
+```
+
+**Features:**
+- Creates 10 sample products across different categories
+- Includes image uploads for each product
+- Products have pricing, descriptions, stock levels, and status
+- Skips products that already exist
+- Safe to run multiple times
+
+### `add-products-simple.ts`
+Adds sample products to your database without images.
+
+**Usage:**
+```bash
+pnpm run add-products-simple
+# or
+npm run add-products-simple
+```
+
+**Features:**
+- Creates 10 sample products without images
+- Faster execution (no file uploads)
+- Products have pricing, descriptions, stock levels, and status
+- Skips products that already exist
+- Safe to run multiple times
+
 ## Prerequisites
 
 1. **Environment Variables**: Ensure your `.env` file contains the required variables:
@@ -46,7 +80,9 @@ npm run add-categories-simple
 
 The scripts use Payload's Local API to interact with your database and do not require the development server to be running.
 
-## Sample Categories
+## Sample Data
+
+### Categories
 
 The scripts create the following categories:
 
@@ -58,6 +94,39 @@ The scripts create the following categories:
 6. **Health & Beauty** - Wellness and personal care products
 7. **Automotive** - Car parts and accessories *(full script only)*
 8. **Toys & Games** - Entertainment for all ages *(full script only)*
+
+### Products
+
+The product scripts create the following sample products:
+
+**Electronics:**
+- Wireless Bluetooth Headphones ($89.99, sale: $79.99)
+- Smartphone Stand ($19.99)
+
+**Clothing:**
+- Cotton T-Shirt ($24.99, sale: $19.99)
+- Denim Jeans ($79.99)
+
+**Home & Garden:**
+- Ceramic Plant Pot ($34.99)
+- Garden Hose 50ft ($29.99)
+
+**Sports & Outdoors:**
+- Yoga Mat ($39.99, sale: $34.99)
+- Water Bottle 32oz ($16.99)
+
+**Books & Media:**
+- Programming Guide ($49.99)
+
+**Health & Beauty:**
+- Natural Face Cream ($24.99)
+
+Each product includes:
+- Title and unique slug
+- Pricing (some with sale prices)
+- Rich text descriptions
+- Stock levels
+- Active status (ready for display)
 
 ## Customization
 

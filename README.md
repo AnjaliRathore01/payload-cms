@@ -74,6 +74,12 @@ pnpm run add-categories-simple
 
 # Add categories with images (requires image files)
 pnpm run add-categories
+
+# Add products with sample data (no images)
+pnpm run add-products-simple
+
+# Add products with images (requires image files)
+pnpm run add-products
 ```
 
 These scripts will create sample categories like Electronics, Clothing, Home & Garden, etc. See `scripts/README.md` for more details.

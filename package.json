@@ -17,7 +17,9 @@
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
     "add-categories": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/add-categories.ts",
-    "add-categories-simple": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/add-categories-simple.ts"
+    "add-categories-simple": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/add-categories-simple.ts",
+    "add-products": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/add-products.ts",
+    "add-products-simple": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/add-products-simple.ts"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "3.68.5",
